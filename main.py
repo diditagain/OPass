@@ -5,6 +5,24 @@ from random import choice, randint, shuffle
 import json
 import pyperclip
 
+#Search website
+def search_website():
+    site = website_entry.get()
+    try:
+        with open("data.json", "r") as search_data:
+            websites = json.load(search_data)
+    except FileNotFoundError:
+        messagebox.showerror(title="No Data File", text="You haven't saved any passwords yet.")
+    else:
+        if site in websites:
+            login_info = websites[site]
+            email = login_info["email"]
+            password = login_info["password"]
+            prompt = messagebox.showinfo(title="Login Info", message=f"For {site}, \n Email: {email} \n Password: {password}")
+        else:
+            message = messagebox.Message("Login info about this website has not been found.")
+
+
 #Password Generator#
 
 def generator():
@@ -46,6 +64,11 @@ def save_password():
         "email": email,
         "password": password
     }}
+
+    def write_data(input_data):
+            with open("data.json", "w") as data_file:
+                json.dump(input_data, data_file, indent=4)
+
     if len(website) == 0 or len(password) == 0 or len(email) == 0:
         warning = messagebox.showerror(title="Error", message="Please fill all required fields")
     else:
@@ -55,15 +78,14 @@ def save_password():
         try:
             with open("data.json", "r") as data_file:
                     data = json.load(data_file)
-                    data.update(login_data)
         except FileNotFoundError:
-            with open("data.json", "w") as data_file:
-                json.dump(login_data, data_file, indent=4)
+            write_data(login_data)
         else:
-            with open("data.json", "w") as data_file:
-                json.dump(data, data_file, indent=4)
-        website_entry.delete(0, END)
-        password_entry.delete(0, END)
+            data.update(login_data)
+            write_data(data)
+        finally:
+            website_entry.delete(0, END)
+            password_entry.delete(0, END)
 
 #UI
 
@@ -89,12 +111,12 @@ password_label = Label(text="Password:")
 password_label.grid(row=3, column=0)
 
 #Website Entry
-website_entry = Entry(width=40)
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry = Entry(width=21)
+website_entry.grid(row=1, column=1)
 website_entry.focus()
 
 #Email Entry
-email_entry = Entry(width=40)
+email_entry = Entry(width=38)
 email_entry.grid(row=2, column=1, columnspan=2)
 email_entry.insert(0, "")
 #Password Entry
@@ -103,12 +125,17 @@ password_entry.grid(row=3, column=1)
 
 #Generate Button
 
-generate_button = Button(text="Generate Password", width=15, command=generator)
+generate_button = Button(text="Generate Password", width=13, command=generator)
 generate_button.grid(row=3, column=2)
+
+#Search Button
+
+search_button = Button(text="Search", width=13, command=search_website)
+search_button.grid(row=1, column=2)
 
 #Add Button
 
-add_button = Button(text="Add", width=37, command=save_password)
+add_button = Button(text="Add", width=35, command=save_password)
 add_button.grid(row=4, column=1, columnspan=2)
 
 
