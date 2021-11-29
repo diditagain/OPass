@@ -10,6 +10,6 @@ Opass is a simple password manager that has built in functions such as:
 
 ## Built With
 
-Opass has been built with Python and built-in python modules except pyclip.
+Opass has been built with Python and built-in python modules except tkinter and pyclip.
 
 [You can see the pypi page of pyperclip here](https://pypi.org/project/pyperclip/)
