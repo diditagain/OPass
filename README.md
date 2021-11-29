@@ -4,7 +4,7 @@
 
 Opass is a simple password manager that has built in functions such as:
 
-1. Save Login infos to a txt file named data
+1. Save Login infos to a json file named data
 2. Generate password
 3. Copy generated password to clipboard
 
