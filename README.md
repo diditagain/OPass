@@ -2,6 +2,8 @@
 
 ## About the Project
 
+This is a portfolio project. OPass data is not encrypted. Use it at you own risk.
+
 Opass is a simple password manager that has built in functions such as:
 
 1. Save Login infos to a json file named data
